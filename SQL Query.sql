@@ -25,3 +25,6 @@ CREATE TABLE savedVerses (
     UserId INTEGER REFERENCES users(id) NOT NULL,
     verseId INTEGER REFERENCES verses(id) NOT NULL
 );
+
+ALTER TABLE users
+ADD COLUMN isAdmin BOOLEAN DEFAULT false;

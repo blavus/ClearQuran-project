@@ -18,7 +18,12 @@ export const login = tryCatch(async (req, res) => {
     throw new AppError(100, "wrong password", 400);
   }
 
-  const token = jwt.sign({ id: user.rows[0].id }, "secret Key");
+  
+  
+  const token = jwt.sign(
+    { id: user.rows[0].id, isAdmin: user.rows[0].isadmin },
+    process.env.JWT_SECRET
+  );
   const { password: pwd, ...other } = user.rows[0];
   res.status(200).json({
     status: "succuss",
