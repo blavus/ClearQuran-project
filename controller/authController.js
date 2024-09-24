@@ -28,7 +28,9 @@ export const login = tryCatch(async (req, res) => {
 });
 
 export const register = tryCatch(async (req, res) => {
-  const { username, email, password } = await registerSchema.validateAsync(req.body);
+  const { username, email, password } = await registerSchema.validateAsync(
+    req.body
+  );
   const existUser = await db.query(
     "select * FROM users WHERE email = $1 OR username = $2",
     [email, username]
@@ -46,8 +48,9 @@ export const register = tryCatch(async (req, res) => {
       [username, email, hash]
     );
 
-    if (newUser.error) {
-      res.status(400).json("errrrrrr");
-    }
+    res.status(200).json({
+      status: "succuss",
+      msg: "user has been created",
+    });
   });
 });
