@@ -3,8 +3,10 @@ import { tryCatch } from "../utils/catchAsync.js";
 import AppError from "../utils/AppError.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { loginSchema, registerSchema } from "../schema/index.js";
+
 export const login = tryCatch(async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password } = await loginSchema.validateAsync(req.body);
 
   const user = await db.query("select * FROM users WHERE email = $1", [email]);
   if (user.rows.length == 0) {
@@ -26,7 +28,7 @@ export const login = tryCatch(async (req, res) => {
 });
 
 export const register = tryCatch(async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password } = await registerSchema.validateAsync(req.body);
   const existUser = await db.query(
     "select * FROM users WHERE email = $1 OR username = $2",
     [email, username]
