@@ -16,14 +16,14 @@ export const verifyToken = (req, res, next) => {
       next();
     });
   } else {
-    throw new AppError(401, "You are not authorized", 401);
+    throw new AppError(401, "please provide token", 401);
   }
 };
 
 export const verifyAuth = (req, res, next) => {
   verifyToken(req, res, () => {
 
-    if (req.params.id == req.user.id || req.user.isadmin) {
+    if (req.params.id == req.user.id || req.user.isAdmin) {
       console.log(req.params.id);
       console.log(req.user.id);
 
