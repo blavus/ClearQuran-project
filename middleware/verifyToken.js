@@ -2,10 +2,9 @@ import jwt from "jsonwebtoken";
 import AppError from "../utils/AppError.js";
 
 export const verifyToken = (req, res, next) => {
-  const authHeaders = req.headers.token;
+  const token = req.headers.token;
 
-  if (authHeaders) {
-    const token = authHeaders.split(" ")[1];
+  if (token) {
     jwt.verify(token, process.env.JWT_SECRET, (error, userInfo) => {
       if (error) {
         throw new AppError(401, "Token Not Valid", 401);
